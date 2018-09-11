@@ -71,7 +71,6 @@ def diode_scan():
     return
 
 
-
 def fourier(fname, mwf, ax=None):
     """Test out fourier analysis on the data."""
     # fig, ax = plt.subplots(nrows=1, ncols=1)
@@ -110,7 +109,7 @@ def transform_delay(data, mwf, nave):
     data['wlen'] = data['dist']*mwf/c
     data['time'] = data['dist']/c
     # sort
-    data.sort_values(by = 'd', inplace=True)
+    data.sort_values(by='d', inplace=True)
     # rolling mean
     data['nsig_rm'] = data['nsig'].rolling(window=nave, center=True).mean()
     # !!!!
@@ -120,7 +119,7 @@ def transform_delay(data, mwf, nave):
     # data.sort_values(by = 'wlen_fd', inplace=True)
     # data['nsig_fd'] = data['nsig'].rolling(window=nave, center=True).mean()
     # re-sort
-    data.sort_values(by = 'd', inplace=True)
+    data.sort_values(by='d', inplace=True)
     return data
 
 
@@ -128,7 +127,7 @@ def model_func_4(x, y0, a, phi, a2, phi2, a3, phi3, a4, phi4):
     """1st, 2nd, 3rd harmonic sinusoidal + offset model."""
     return y0 + a*np.sin(1*2*np.pi*x + phi) + a2*np.sin(2*2*np.pi*x + phi2) + \
         a3*np.sin(3*2*np.pi*x + phi3) + a4*np.sin(4*2*np.pi*x + phi4)
-        
+
 
 def model_p0(x, y):
     """Guesses reasonable starting parameters p0 to pass to model_func().
@@ -180,7 +179,7 @@ def fitting_4(fname, mwf, plotting=False, printing=False, ax=None):
                   label="Averaged")
         data.plot(x='wlen', y='fit', color='k', ax=ax, label="Fit")
         ax.set(title=fname, xlabel=r"Delay (MW $\lambda$)",
-                 ylabel="Norm. Signal")
+               ylabel="Norm. Signal")
     return popt
 
 
