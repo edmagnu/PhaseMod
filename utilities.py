@@ -86,3 +86,36 @@ def dscan_import(fname, mwf):
     data['sig'] = data['s'] - data['sb']
     data['nsig'] = data['sig'] / (data['n'] - data['nb'])
     return data
+
+
+def dscan_plot(data, ax, nave=9):
+    """Standardize plotting of delay scan.
+    inputs:
+        data : pandas.DataFrame with 'fwlen' and 'sig'
+        ax : axes to plot on
+        nave=9 : number of points for rolling mean
+    returns:
+        data : Same as input with one extra key
+            'srol' : rolling mean of 'sig' using nave points
+        ax : axes plotted on.
+    """
+    data['srol'] = data['sig'].rolling(window=nave, center=True).mean()
+    data.plot(x='fwlen', y='sig', marker='.', ls="", color='lightgrey', ax=ax)
+    data.plot(x='fwlen', y='srol', lw=3, color='k', ax=ax)
+    return data, ax
+
+
+def dscan_twin(ax, mwf):
+    """For a delay scan, build a twiny axes for timing from wavelength
+    inputs:
+        ax : axes from which to build the twiny axes
+        mwf : microwave frequency
+    returns:
+        ax2 : twiny axes with time delay in ps.
+    """
+    conv = 1e12/mwf  # Period in ps
+    ax2 = ax.twiny()
+    xlims = ax.get_xlim()
+    tlims = tuple(np.array(xlims)*conv)
+    ax2.set(xlim=tlims, xlabel="Delay (ps)")
+    return ax2

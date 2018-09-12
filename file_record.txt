@@ -37,7 +37,7 @@ Record of important files:
 		f = 361354.3 GHz (3d3/2 -> |n=27, l=3>)
 		PM On (1.4)
 		MW On (Attn = -10 dB)
-		Static -z (+9 V Bot, -9 V Top)
+		Static +z (+9 V Bot, -9 V Top)
 	7_delay.txt
 		Diode delay scan of n=27
 		f = 361354.6 GHz (3d3/2 -> |n=27,l=4>)
