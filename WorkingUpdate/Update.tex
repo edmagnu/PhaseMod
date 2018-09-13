@@ -6,17 +6,33 @@
 
 Tom,
 
-I've measured a phase dependent signal from $27f$ in a MW field, both with and without static field. Due to issues with controlling the DIL (-70 GHz was the best I got to), I could not compare with phase dependence at the limit. This is a good proof of concept. In separate data runs, I have seen phase dependence with adn withotu static field at the limit and at $27f$.
+I've measured a phase dependent signal from $27f$ in a MW field, both with and without static field. Due to issues with controlling the DIL (-70 GHz was the best I got to), I could not compare with phase dependence at the limit. This is a good proof of concept. In separate data runs, I have seen phase dependence with and without static field, both at the limit and at $27f$.
 
 
-In all the following measurements, I detect electrons using a 4 kV slow field ionization pulse (SFIP) across 5 cm, rising 1 $\mu$s after the 819-nm laser pulse. I am able to get a clear signal as low as $n=26$. $n=27$ gives a clean signal, and is what I focus on. It may be worth looking at how much deeper I can ionize.
+In all the following measurements, I detect electrons using a 4 kV slow field ionization pulse (SFIP) across 5 cm, rising 1 $\mu$s after the 819-nm laser pulse. I am able to get a signal as low as $n=26$. $n=27$ gives a clean signal, and is what I focus on. It may be worth looking at how much deeper I can ionize.
 
+
+Figure \ref{fig:n27mw} shows spectroscopy of $n=26$ through $n=29$ using the 819-nm dye laser. The laser has a FWHM of about 12 GHz, so the $p$ and $f$ states are not resolved. I get a good signal from the $3d \rightarrow 27f$ transition, so this is what I focus on for the rest of the measurements. Applying a MW field produces resolved sidebands. I did not calibrate it, but compared to past calibrations it is around 50 V/cm.
+
+Figure \ref{fig:n27s} shows spectroscopy of $27f$ with and without an applied vertical static field, using the diode laser with a FWHM of about 100 MHz. In zero field, I can separately resolve transitions to $27f$ from $3d_{5/2}$ and $3d_{3/2}$, separated by about 1.05 GHz. Tuning the 670-nm laser to the $2s \rightarrow 2p_{3/2}$ rather than $2p_{1/2}$, separated by 10.04 GHz, causes transitions from $3d_{5/2}$ to be about twice as strong.
+
+Applying a 3 V/cm static field causes Stark splitting. I can resolve separately each of the 25 Stark states ($s$ and $p$ are too far from the manifold). The transitions from $3d_{3/2}$ and $3d_{5/2}$ overlap each other, except the bluest 3 from $3d_{3/2}$ and reddest 3 from $3d_{5/2}$. At 3 V/cm, the states are separated by about 340 MHz, leaving plenty of room to apply higher voltages for larger separations. Further, this state's manifold should be solvable by the ARC program's Stark Map calculator.
+
+I have observed phase dependence by applying the roughly 50 V/cm, 39.3 GHz MW field, and phase modulating the diode laser at an index of 1.4, where the $-1, 0, +1$ sidebands have equal amplitude. These delay scans are shown in Fig. \ref{fig:del}.
+
+Figure \ref{fig:del} (a) shows a delay scan taken with no applied static field, and the central frequency of the diode laser tuned to the $3d_{5/2} \rightarrow 27f$ transition. Modulation occurs at half the MW period. The data is not very clear, I am not certain what the phase of the modulation is.
+
+Figures \ref{fig:del} (b) and (c) show scans with $-3, +3$ V/cm static fields, respectively. In this case, the central frequency was tuned to the bluest Stark state of the $3d_{3/2} \rightarrow 27f$ transition. Modulation occurs at the MW period, and reversing the static field reverses the modulation of the signal.
+
+Figures \ref{fig:del} (d) and (e) again show scans with $-3, +3$ V/cm static fields, respectively. Here, the central frequency is tuned to the reddest Stark state of the $3d_{5/2} \rightarrow 27f$ transition. By comparing either (b) to (d), or (c) to (e), it is clear that blue and red Stark states have opposite phase dependence.
+
+\pagebreak
 
 \begin{figure}
 	\includegraphics{n27_and_sidebands}
-	\caption{Spectroscopy of $n=26~\textrm{to}~29$ using the 819-nm dye laser, FWHM $\approx 12$ GHz. The horizontal axis shows the dye laser frequency relative to the $3d_{5/2} \rightarrow \textrm{Limit}$ transition, $f_{dye} - 365869.6$ GHz. The vertical axis shows integrated signal from collected $e^-$, in arbitrary units.
-	\textbf{(Top)} Without static or MW fields, spectroscopy shows $|26~p,f{>}$ through $|29~p,f{>}$.
-	\textbf{(Bottom)} Turning on the 39.3 GHz MW field shows clear $\pm 1$ and weak $\pm 2$ sidebands. Calibration has not been one on the field, but a guess based on past calibration is 50 V/cm.}
+	\caption{Spectroscopy of $n=26~\textrm{to}~29$ using the 819-nm dye laser, FWHM $\approx 12$ GHz. The horizontal axis shows the dye laser frequency relative to the $3d_{5/2} \rightarrow \textrm{Limit}$ transition at 365869.6 GHz.
+	\textbf{(Top)} Without static or MW fields. Due to the linewidth, $p$ and $f$ states are not resolved.
+	\textbf{(Bottom)} Turning on the 39.3 GHz MW field shows clear $\pm 1$ and weak $\pm 2$ sidebands at $n=27$. The field has not been calibrated, but a guess based on past calibration is 50 V/cm.}
 	\label{fig:n27mw}
 \end{figure}
 
@@ -32,10 +48,10 @@ In all the following measurements, I detect electrons using a 4 kV slow field io
 
 \begin{figure}
 	\includegraphics{delays}
-	\caption{Delay scans with MW field (50 V/cm?) and a diode laser phase modulation index of 1.4.
-	\textbf{(a)} 0 V/cm static, and the diode laser centered at $3d_{5/2} \rightarrow 27f$. Phase dependence is observed at twice the MW period.
-	\textbf{(b) and (c)} $+3, -3$ V/cm static respectively, centered at the bluest line $l=25$ of $3d_{3/2} \rightarrow 27f$. Phase dependence is observed at the MW period, and reversing the static field reverses the phase dependence.
-	\textbf{(d) and (e)} $+3, -3$ V/cm static respectively, centered at the reddest line $l=2$ of $3d_{5/2} \rightarrow 27f$. Comparing (b) to (d), both at $+3$ V/cm, changing from blue to red Stark states reverses the phase dependence.}
+	\caption{Delay scans with MW field (50 V/cm?) and a diode-laser phase-modulation index of 1.4.
+	\textbf{(a)} 0 V/cm static, and the diode laser centered at $3d_{5/2} \rightarrow 27f$. Phase dependence is observed at half the MW period.
+	\textbf{(b) and (c)} $-3, +3$ V/cm static respectively, centered at the bluest line of $3d_{3/2} \rightarrow 27f$. Phase dependence is observed at the MW period, and reversing the static field reverses the phase dependence.
+	\textbf{(d) and (e)} $-3, +3$ V/cm static respectively, centered at the reddest line of $3d_{5/2} \rightarrow 27f$. Comparing (b) to (d), both at $-3$ V/cm, changing from blue to red Stark states reverses the phase dependence.}
 	\label{fig:del}
 \end{figure}
 

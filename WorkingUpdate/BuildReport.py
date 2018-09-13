@@ -89,7 +89,7 @@ def n27_and_stark():
 
 def delays():
     fig, axes = plt.subplots(nrows=5, ncols=1, sharex=True,
-                             figsize=(4.5, 6))
+                             figsize=(4, 5))
     # n=27 without static field.
     ax = axes[0]
     folder = os.path.join("..", "..", "2018-09-09")
