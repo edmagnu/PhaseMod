@@ -11,16 +11,10 @@ Created on Sat Oct 13 14:37:26 2018
 # 2018-10-09
 
 
-import os
-import numpy as np
-from scipy.stats import cauchy
-from scipy.optimize import curve_fit
-import matplotlib.pyplot as plt
-import pandas as pd
-import toolkit as tk
-
-
 def cavity_resonances(date):
+    import os
+    import matplotlib.pyplot as plt
+    import toolkit as tk
     """Using the dye laser at -180 GHz, the MW f is scanned over the
     cavity resonances, finding center, FWHM, and Q values."""
     fig, axes = plt.subplots(nrows=1, sharex=True)
@@ -37,6 +31,9 @@ def cavity_resonances(date):
 
 
 def mw_sideband_scans(date):
+    import os
+    import matplotlib.pyplot as plt
+    import toolkit as tk
     """Scan the dye laser from n=27 -3 f_MW to +3 f_MW in static and MW field.
     Looking for sideband strength change with applied MW field."""
     fig, axes = plt.subplots(nrows=5, ncols=2, sharex=True, sharey=True,
