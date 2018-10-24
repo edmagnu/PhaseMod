@@ -198,5 +198,5 @@ def delay():
 
 # main
 # dye_scan()
-# delay()
-diode_scan()
+delay()
+# diode_scan()

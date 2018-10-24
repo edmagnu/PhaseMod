@@ -187,14 +187,60 @@ def transform_delay(data, mwf, nave, sortkey, fold=1, blink=False):
     data['nsig_fold'] = data['nsig'].rolling(window=nave, center=True).mean()
     # sort
     data.sort_values(by=sortkey, inplace=True)
-    return data
+    data, popt, pcov = fit_delay(data, 'nsig')
+    return data, popt, pcov
+
+
+def wlen_to_step(wlen, mwf):
+    m = 2.539e-7  # delay stage calibration, m/step
+    n = 1.00029  # index of refraction in air
+    c = 299792458.0  # Speed of Light, meters/second
+    dist = wlen*c/(mwf*n)
+    step = dist/(2*m)
+    return step
+
+
+def step_to_wlen(step, mwf):
+    m = 2.539e-7  # delay stage calibration, m/step
+    n = 1.00029  # index of refraction in air
+    c = 299792458.0  # Speed of Light, meters/second
+    dist = step*m*2
+    wlen = dist*mwf*n/c
+    return wlen
+
+
+def fit_model(x, a0, a1, phi1, a2, phi2, a3, phi3, a4, phi4):
+    val = (a0 +
+           a1*np.cos(1*2*np.pi*(x - phi1)) +
+           a2*np.cos(2*2*np.pi*(x - phi2)) +
+           a3*np.cos(3*2*np.pi*(x - phi3)) +
+           a4*np.cos(4*2*np.pi*(x - phi4)))
+    return val
+
+
+def fit_delay(data, ykey):
+    p0 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    popt, pcov = curve_fit(fit_model, data['wlen'].values, data[ykey].values,
+                           p0)
+    fit = fit_model(data['wlen'].values, *popt)
+    data['fit'] = fit
+    return data, popt, pcov
+
+
+def fit_report(fname, label, popt):
+    print("\n" + fname + "    " + label)
+    names = ["a0", "a1", "phi1", "a2", "phi2", "a3", "phi3", "a4", "phi4"]
+    for i, name in enumerate(names):
+        print(name + " = " + str(popt[i]))
+    return
 
 
 def delay_plot(fname, xkey, ykey, ykey2, mwf, nave, ax, label, fold=1,
                blink=False):
     """Plot a delay scan by loading, transforming, and plotting it."""
     data = delay_load(fname)
-    data = transform_delay(data, mwf, nave, xkey, fold, blink)
+    data, popt, pcov = transform_delay(data, mwf, nave, xkey, fold, blink)
+    fit_report(fname, label, popt)
     if ykey not in ['nsig_fold', 'nsig_rm']:
         data[ykey + "_rm"] = data.rolling(window=nave, center=True).mean()
         ykey = ykey + "_rm"
@@ -205,4 +251,32 @@ def delay_plot(fname, xkey, ykey, ykey2, mwf, nave, ax, label, fold=1,
     data[mask].plot(x=xkey, y=ykey2, label="raw", ax=ax, ls="", marker=".",
                     c="lightgrey")
     data[mask].plot(x=xkey, y=ykey, label=label, ax=ax, lw=2)
-    return data
+    data[mask].plot(x=xkey, y='fit', label='fit', ax=ax, lw=2)
+    return data, popt, pcov
+
+
+# ==========
+# Phase Modulation Tool
+# ==========
+
+
+def gba_target(x, value):
+    import scipy.special as sp
+    return (sp.jv(0, x)**2 - value)**2
+
+
+def get_bessel_arg(amp_off, amp_on, amp_0, guess=1.0, quiet=False):
+    import scipy.optimize as opt
+    import scipy.special as sp
+    value = (amp_on - amp_0)/(amp_off - amp_0)
+    args = (value,)
+    fit = opt.minimize(gba_target, guess, args=args, bounds=[(0, 100)])
+    if quiet is False:
+        print(fit)
+    fit = fit['x'][0]
+    if quiet is False:
+        print("fit = ", fit)
+        print("result = ", gba_target(fit, value))
+        print("value = ", value)
+        print("jv(0, fit) = ", sp.jv(0, fit)**2)
+    return fit

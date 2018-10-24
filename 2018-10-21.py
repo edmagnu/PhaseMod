@@ -14,7 +14,8 @@ def delays(date):
     instrs = [["1_delay_diode.txt", "PM = 0.9", axes[0]],
               ["2_delay_diode.txt", "PM = 1.3", axes[1]],
               ["3_delay_diode.txt", "PM = 2.4", axes[2]]]
-    xkey = 'wlen_fold'
+    # xkey = 'wlen_fold'
+    xkey = 'wlen'
     ykey = 'nsig_fold'
     ykey2 = 'nsig'
     nave = 4
