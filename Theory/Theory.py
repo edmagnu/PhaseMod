@@ -100,7 +100,8 @@ def turnaround_plots():
     axes[1].legend()
     axes[0].set_xlabel("PM Index")
     axes[0].set_ylabel("Normalized Signal")
-    fig.suptitle("Minimum and Maximum Signal vs. PM for MW Modulations")
+    fig.suptitle("Minimum and Maximum Signal vs. PM for State Modulation" + 
+                 "Indicies")
     # fig.tight_layout()
     fig.savefig("MinMaxMod.pdf")
     return
@@ -109,7 +110,7 @@ def turnaround_plots():
 
 def main():
     pm_mw_lattice_plots()
-    # turnaround_plots()
+    turnaround_plots()
     return
 
 
