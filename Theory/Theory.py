@@ -62,8 +62,9 @@ def pm_mw_lattice_plots():
     for i, dpm in enumerate(dpms):
         for j, dmw in enumerate(dmws):
             data = build_phsig(kmax, dpm, dmw)
+            data['wlen'] = data['t']/(2*np.pi)
             # label = "PM = {0}, MW = {1}".format(dpm, dmw)
-            data.plot(x='t', y='s', ax=axes[i, j])
+            data.plot(x='wlen', y='s', ax=axes[i, j])
             axes[i, j].legend().remove()
     for i, dpm in enumerate(dpms):
         axes[i, 0].set_ylabel("PM = " + str(dpm))
