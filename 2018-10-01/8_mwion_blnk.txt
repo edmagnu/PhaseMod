@@ -1,0 +1,12 @@
+# Blinking MW between 18.5098 and 18.48 (off resonance) GHz, Hittite @ 14 dBm, Dye laser at -180 GHz, looking for MW ionization
+# Using the HP 214B for field ionization.
+# here 'd' is the Variable Attenuator value.
+i	d	s1	s2	r
+0	-27	0.118113	0.128694	0.917782
+1	-25	0.114814	0.134750	0.852049
+2	-29	0.129434	0.135170	0.957564
+3	-26	0.121803	0.135837	0.896687
+4	-28	0.123828	0.130435	0.949343
+5	-26.5	0.115268	0.128405	0.897690
+6	-25.5	0.116996	0.136760	0.855489
+7	-27.5	0.124422	0.132502	0.939015

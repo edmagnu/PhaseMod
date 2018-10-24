@@ -119,7 +119,7 @@ def build_spectroscopy(e, fmin, fmax, ax, label="", lw=0.1, sbds=False,
     return spectrum
 
 
-def build_SM():
+def build_SM(color=True):
     """Build the Stark Map with Highlighting"""
     mwf = 18.5
     efld = read_efield()
@@ -132,8 +132,15 @@ def build_SM():
     # for i in range(103, 104):
     plt.figure(figsize=(10, 10))
     for i in range(80, 180):
-        plt.scatter(efld['efield']/100, elvl[i].values, c=hglt[i].values,
-                    cmap='Reds', vmin=0, vmax=0.1, s=0.1)
+        # plt.scatter(efld['efield']/100, elvl[i].values, c=hglt[i].values,
+        #             cmap='Reds', vmin=0, vmax=0.1, s=0.1)
+        if color is True:
+            args = {'c': hglt[i].values, 'cmap': 'Reds', 'vmin': 0,
+                    'vmax': 0.1, 's': 2}
+            plt.scatter(efld['efield']/100, elvl[i].values, **args)
+        else:
+            args = {'c': 'k', 'lw': 0.5}
+            plt.plot(efld['efield']/100, elvl[i].values, **args)
     e0 = elvl.loc[0, 127]
     print(e0)
     for i in [-2, -1, 0, 1, 2]:
@@ -141,9 +148,10 @@ def build_SM():
         plt.axhline(e0 + i*mwf, c='grey', linestyle='dashed')
     plt.xlabel("Field (V/cm)")
     plt.ylabel("Binding Energy (GHz)")
-    plt.colorbar()
-    ax = plt.gca()
-    ax.patch.set_facecolor('lightblue')
+    if color is True:
+        plt.colorbar()
+        ax = plt.gca()
+        ax.patch.set_facecolor('lightblue')
     plt.grid(True)
     plt.tight_layout()
     plt.savefig("StarkMap_fchar.png")
@@ -218,8 +226,8 @@ if __name__ == "__main__":
     # efld = read_efield()
     # ax = spectrum.plot(x='freq', y='signal')
     # ax.set_xlim(-4535, -4505)
-    # build_SM()
+    build_SM(color=False)
     # scratch()
     # colortest()
     # spect_cal_fig()
-    spectrum = test_spectroscopy()
+    # spectrum = test_spectroscopy()

@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{State of the Phase Modulation Experiment}
+\author{Eric Magnuson}
+
+\maketitle
+
+\section{MW Field Calibration}
+
+I'm using results from Arakeylan's "Metastable states in microwave ionization" to calibrate the MW field (\ref{fig:Arak}). His experiment show that in the -150 GHz to -300 GHz region, when the depressed limit is small (<18 GHz), the field for 90\% survival is fairly flat.
+
+Using a similar experimental setup, I can find the MW power that gives 10\% ionization for a variety of laser tunings between -150 and -300 GHz, shown in ~\ref{fig:mwion}. Aside from two outliers, they agree to within $\pm$ 10\%. This suggests the 10\% ionization field reported by Arakalyan is about 0.050 in ~\ref{fig:mwion}, or 27 dB on my Variable Attenuator.
+
+To supplement this, I took frequency scans from 0 to -300 GHz at different MW powers, normalized to signal at no MW power. Figure \ref{fig:dyemwion} shows this method agrees that the Variable Attenuator between 27 and 25 dB gives 10\% ionization in the -150 to -300 GHz range.
+
+\section{Stark Maps}
+
+I've used ARC (\textit{Alkali Rydberg Calculator}) by N. Sibalic, C.S. Adams, and K.J. Weatherhill from JQC at Durham-Newcastle, and J.D. Pritchard at Strathclyde. One of it's functions is calculating Stark Maps for Lithium. I can use this to predict the field to produce a desired state splitting, and also to calibrate the field seen by the atoms for a given voltage applied across my Top and Bottom field plates.
+
+First, Fig. \ref{fig:Starkf} shows a full Stark Map, from zero field to when n=27 starts crossing n=26 and n=28, at greater than 100 V/cm. The coloring highlights the f-character, and is a fair proxy for the strength of the transition. At < 15 V/cm, the f-character is in two lobes at the extremes of the manifold. Greater than >20 V/cm, the 27p joins the manifold, and the f-character is in 3 lobes.
+
+Figure \ref{fig:stark} shows scanning the diode laser for several applied voltages. Every line has a twin with about half the amplitude, offset by 1.05 GHz, the $3^2D_{3/2,5/2}$ fine structure splitting. The amplitude difference is due to tuning the 670 nm laser to preferentially excite $2^2P_{1/2}$. At 0 V, the field is clearly not actually zeroed, and I see plenty of signal from 27d. There is also a small, unaccounted for peak near -4517 GHz at 0 V, which then appears to split at 20 V and 40 V applied. This is not 27p, which is at -4526.9 GHz, unfortunately just out of scanning reach.
+
+From these scans, I can clearly see the extent of the Stark Manifold at 20 and 40 V, as well as the line spacing. At 200 V, I can only clearly see the line spacing. 40 V is very useful for two reasons. First, the lines from the 3d fine structure can be separately resolved, they do not overlap. Second, the extent of the manifold is less than the MW separation, so the side bands from one state cannot overlap with another state.
+
+
+I can compare these spectra to calculations from ARC to calibrate an applied voltage to a field in the interaction region. This works out quite well if I manually add the 3d fine-structure splitting. Comparing Fig. \ref{fig:ARCStark} with Fig. \ref{stark}, I can calculate that $\textit{Field (V/cm)} = 0.825 \times \textit{Voltage (V)} \times 1/\textit{5 cm}$.
+
+
+\begin{figure}
+	\includegraphics[width=0.7\textwidth]{ArakaylanMWIonization.pdf}
+	\caption{Figure 3 from \textit{Metastable states in microwave ionization}, A. Arakelyan and T.F. Gallagher. The 10\% ionization field from -150 GHz to -300 GHz is constant.}
+	\label{fig:Arak}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=0.7\textwidth]{mwion_scan}
+	\caption{At several laser tunings between -150 and -300 GHz, I adjusted the MW power and measured survival probability relative to no MW power. Aside from two outliers, -300 GHz (very shallow slope) and -210 GHz (same slope, but offset to high field), they all agree to within 10\%.}
+	\label{fig:mwion}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=0.7\textwidth]{dye_mwion}
+	\caption{Frequency scans using the dye laser. Each scan is at a different MW power, controlled by a Variable Attenuator. Signal is normalized by measuring the signal with and without MW power for each data point. In the -150 to -300 GHz range, the 10\% ionization field is bound between 27 dB and 25 dB, a difference in field of 20\%).}
+	\label{fig:dyemwion}
+\end{figure}
+
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{StarkMap_fchar.png}
+	\caption{Stark Map for n=27 as calculated by ARC. The darkness of each line is the amount of 27f$_{5/2}$ character the state has in it. This is a fair proxy for the peak amplitude when I do spectroscopy, though it could be improved by combining 27f$_{5/2,7/2}$ and 27p$_{1/2,3/2}$. At < 15 V/cm, the character is in two lobes at either extreme. At > 20 V/cm 27p mixes in and the f-character now has an extra peak near the center. > 100 V/cm, the states begin to mix with the n=26 and n=28 manifold.}
+	\label{fig:Starkf}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{stark_scans}
+	\caption{Diode laser scan of the n=27 manifold at different applied voltages between the Top and Bottom bias plates. At 0 V, there is an unaccounted for peak at -4517 GHz, that seems to split when a field is applied. The 27f and 27d states are resolved, with a 50\% amplitude duplication offset by 1.05 GHz, the 3d fine-structure splitting. At 20 and 40 V, the bi-modal amplitudes reflect the f-character being distributed in the manifold. At 200 V, the 27f fine-structure splitting becomes clearly visible.}
+	\label{fig:stark}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{Arc_Stark}
+	\caption{Calculated spectra assuming only f-character can be excited, using ARC. Lines due to the 3D fine-structure splitting are added. Comparing line spacing to spectra, the static field can be calibrated to be $\textit{Field (V/cm)} = 0.825 / 5 cm \times \textit{Voltage (V)}$}
+	\label{fig:ARCStark}
+\end{figure}
+
+
+\end{document}
