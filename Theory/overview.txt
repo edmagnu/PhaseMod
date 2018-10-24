@@ -1,0 +1,11 @@
+==========
+Modulation as a product of MW and PM:
+==========
+Overview:
+	Applying a modest static field will cause Stark Splitting that I can observe.
+		I currently use 6.6 V/cm to resolve each Stark State
+	Applying a MW field in addition to this state will modulate the energy of the state.
+		This modulation should be describle as a bessel function expansion if the energy(field) is linear.
+	Applying PM to the laser will modulate the laser frequency. This should be describable as a bessel function expansion.
+	The two bessel function expansions can be combined to give a signal dependent on:
+		Phase, MW field, PM amplitude.
