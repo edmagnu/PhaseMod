@@ -1,0 +1,53 @@
+Record of important files:
+
+2018-09-06
+	1_dye_fscan.txt
+		Dye laser frequency scan of n=26 to n=29
+
+2018-09-09
+	1_freq_dye.txt
+		Dye laser frequency scan of n=27 with MW sidebands.
+
+	2_delay.txt
+		Diode delay scan of n=27
+		f = 361359.1 GHz (3d5/2 -> |n=27,l=24>)
+		PM On (1.4)
+		MW On (Attn -10 dB)
+		Static Off
+	3_delay.txt
+		Diode delay scan of n=27
+		f = 361362.5 GHz (3d5/2 -> |n=27,l=24>)
+		PM On (1.4)
+		MW On (Attn -10 dB)
+		Static -z (-9 V Bot, +9 V Top)
+	4_delay.txt
+		Diode delay scan of n=27
+		f = 361362.5 GHz (3d5/2 -> |n=27,l=25>)
+		PM On (1.4)
+		MW On (Attn -10 dB)
+		Static +z (+9 V Bot, -9 V Top)
+	5_delay.txt
+		Diode delay scan of n=27
+		f = 361361.2 GHz (3d3/2 -> |n=27,l=23>, 3d5/2 -> |n=27,l=20>)
+		PM On (1.4)
+		MW On (Attn -10 dB)
+		Static +z (+9 V Bot, -9 V Top)
+	6_delay.txt
+		Diode delay scan of n=27
+		f = 361354.3 GHz (3d3/2 -> |n=27, l=3>)
+		PM On (1.4)
+		MW On (Attn = -10 dB)
+		Static +z (+9 V Bot, -9 V Top)
+	7_delay.txt
+		Diode delay scan of n=27
+		f = 361354.6 GHz (3d3/2 -> |n=27,l=4>)
+		PM On (1.4)
+		MW On (Attn -10 dB)
+		Static -z (-9 V Bot, +9 V Top)
+	
+	8_freq_diode.txt
+		Diode laser scan of n=27 with Static field, messy
+	10_freq_diode.txt
+		Diode laser scan of n=27 with static field, clean, resolved stark states.
+	11_freq_diode.txt
+		Diode laser scan of n=27 without static field.
