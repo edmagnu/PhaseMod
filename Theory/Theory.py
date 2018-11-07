@@ -36,6 +36,23 @@ def build_phsig(kmax, dpm, dmw):
     return phsig
 
 
+def build_phsig_1(kmax, dpm, dmw):
+    import numpy as np
+    import scipy.special as sp
+    import pandas as pd
+    ts = np.linspace(-2*np.pi, 4*np.pi, 64*3 + 1)
+    # Amplitude modifying <g|mu|f> matrix element due to modulation
+    amp = sp.jv(0, dpm)*sp.jv(0, dmw)
+    for k in range(1, kmax+1):
+        progress("build_phsig()", k, kmax+1)
+        term = sp.jv(k+1, dpm)*sp.jv(k, dmw)*np.cos(k*ts)
+        amp = amp + 2*term
+    # value is actually the square of the amplitude.
+    amp = np.square(amp)
+    phsig = pd.DataFrame({'t': ts, 's': amp})
+    return phsig
+
+
 def turning_phsig(kmax, dpm, dmw, ts):
     import numpy as np
     import scipy.special as sp
@@ -49,6 +66,7 @@ def turning_phsig(kmax, dpm, dmw, ts):
     phsig = pd.DataFrame({'pm': dpm, 's': amp})
     return phsig
 
+
 def pm_mw_lattice_plots():
     import numpy as np
     import matplotlib.pyplot as plt
@@ -56,7 +74,7 @@ def pm_mw_lattice_plots():
     # dpm = 2.0  # Phase Modulation coefficient
     # dmw = 1.0  # MW modulation, k_s * E / omega_MW
     dpms = [0, 0.5, 1.5, 2.5]
-    dmws = [0.0, 0.5, 1.0]
+    dmws = [0.0, 0.2, 0.5]
     fig, axes = plt.subplots(nrows=len(dpms), ncols=len(dmws), sharex=True,
                            sharey=True, figsize=(8, 8))
     for i, dpm in enumerate(dpms):
@@ -101,7 +119,7 @@ def turnaround_plots():
     axes[0].set_xlabel("PM Index")
     axes[0].set_ylabel("Normalized Signal")
     fig.suptitle("Minimum and Maximum Signal vs. PM for State Modulation" + 
-                 "Indicies")
+                 " Indicies")
     # fig.tight_layout()
     fig.savefig("MinMaxMod.pdf")
     return
