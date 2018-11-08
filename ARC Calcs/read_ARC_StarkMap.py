@@ -210,14 +210,32 @@ def spect_cal_fig():
 
 
 def test_spectroscopy():
-    e = 6.6e2  # V/cm
+    e = 9.2e2  # 15 V/cm, 1500 V/m
     fmin = -4511 - 18.5*6
     fmax = -4511 + 18.5*6
     fig, ax = plt.subplots()
     lw = 0.05  # 50 MHz
     spectrum = build_spectroscopy(e, fmin, fmax, ax, label="", lw=lw,
-                                  sbds=False, fstruct=True)
+                                      sbds=False, fstruct=True)
+    ax.set_xlim(-4511-23, -4511+13)
+    ax.set_ylabel("Signal (arb. u.)")
+    ax.set_title(
+            "Spectrum at 9.2 V/cm Static, w/ 3D Fine Structure")
+    fig.tight_layout()
+    fig.savefig("Spect_9200mVcm_FS.pdf")
     return spectrum
+
+
+def state_slopes():
+    efld = read_efield()
+    elvl = read_elevels()
+    hglt = read_highlight()
+    i = 130
+    data = pd.DataFrame()
+    data['field'] = efld['efield']
+    data['energy'] = elvl[i]
+    print(data)
+    return
 
 
 if __name__ == "__main__":
@@ -230,4 +248,5 @@ if __name__ == "__main__":
     # scratch()
     # colortest()
     # spect_cal_fig()
-    spectrum = test_spectroscopy()
+    # spectrum = test_spectroscopy()
+    state_slopes()

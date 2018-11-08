@@ -1,0 +1,9 @@
+# Calibration
+# By hand, swapped back and forth between Red most Fine Structure state in 27f w/o MW, and w/ MW.
+# Repeat 5 times to compare signal. 
+b	on	off
+5.9	-244	-250
+6.5	-250	-258
+7.6	-252	-257
+4.7	-258	-267
+8.1	-263	-276

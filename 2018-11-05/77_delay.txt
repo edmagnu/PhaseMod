@@ -1,0 +1,6 @@
+# Delay scan
+# MW at 19 dB, 18.5112 GHz x2, 18.6 dB
+# Laser at 365887 GHz, 1st Resonance.
+# PM at 0 (MAX dB)
+# 80 mV static
+i	d	s	sb	n	nb

@@ -1,0 +1,22 @@
+# fname	mwattn	PM	PMattn	sbnd	lfreq	static	norm	nbkgnd
+# 4_delay.txt	-19	1.0	-38	-1	365818.6	0	0.2629805	0.00582045
+# 5_delay.txt	-19	1.0	-38	-1	365818.6	40	0.280392	-0.0840271
+# fname	mwattn	PM	PMattn	sbnd	lfreq	static
+# 8_delay.txt	-19	1.4	-35	0	365859	0
+# 9_delay.txt	-19	1.4	-35	0	365859	-40
+# 10_delay.txt	-19	2.4	-31.5	0	365859	0
+# 11_delay.txt	-19	2.4	-31.5	0	365869	-40
+# fname	mwattn	PM	PMattn	sbnd	lfreq	static	noPM	noMW
+# 12_delay.txt	-19	1.0	38	-1	365819	0	0.10152	0.27301
+# RES 0
+fname	mwattn	PM	PMattn	sbnd	lfreq	static	noPM	noMW
+13_delay.txt	-19	1.0	-38	0	365859	40	0.0194091	0.051734
+14_delay.txt	-19	1.0	-38	0	365859	0	0.0581792	0.0782713
+15_delay.txt	-19	1.4	-35	0	365859	0	0.0842561	0.104052
+16_delay.txt	-19	1.4	-35	0	365859	40	0.0260517	0.0410796
+17_delay.txt	-19	2.4	-31.5	0	365859	40	0.0388106	0.0280247
+18_delay.txt	-19	2.4	-31.5	0	365859	0	
+# RES -1
+fname	mwattn	PM	PMattn	sbnd	lfreq	static	noPM	noMW
+19_delay.txt	-19	1.0	-38	-1	365819	0	0.146834	0.396621
+20_delay.txt	-19	1.0	-38	-1	365819	40	

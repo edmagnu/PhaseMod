@@ -38,11 +38,9 @@ def cauchy_fit(x, y, d):
         scale0 = (max(x) - min(x))/10
         y00 = 1
     p0 = [a0, loc0, scale0, y00]
-    print(p0)
+    print("p0 = ", p0)
     popt, pcov = curve_fit(cauchy_model, x, y, p0)
-    print("Center Frequency is : ", popt[1]*1e-6, " MHz")
-    print("FWHM is : ", 2*popt[2]*1e-6, " MHz")
-    print("Q is : ", popt[1]/(2*popt[2]))
+    print("popt = ", popt)
     return popt
 
 
@@ -57,20 +55,54 @@ def mw_fscan(fname, d, ax, plotting=True, norm=True):
     else:
         data['nrm'] = data['sig']
     popt = cauchy_fit(data['f'].values, data['nrm'].values, d)
+    print("Center Frequency is : ", popt[1]*1e-6, " MHz")
+    print("FWHM is : ", 2*popt[2]*1e-6, " MHz")
+    print("Q is : ", popt[1]/(2*popt[2]))
     # print(popt)
     if plotting is True:
         data.plot(x='f', y='nrm', ax=ax)
         ax.plot(data['f'].values, cauchy_model(data['f'].values, *popt))
         ax.plot(data['f'].values,
                 data['nrm'].values - cauchy_model(data['f'].values, *popt))
-        ax.axhline(0.9, c='k')
-        ax.axhline(0.5, c='k')
     return data, popt
 
 
 # ==========
 # Frequency Scans
 # ==========
+
+
+def dye_qs_lim(fname, lo_win, hi_win, ax=None, window=9):
+    import pandas as pd
+    if ax is None:
+        import matplotlib.pyplot
+        fig, ax = plt.subplots()
+    data = pd.read_csv(fname, sep="\t", comment="#", index_col=False)
+    data.sort_values(by='f', inplace=True)
+    data['s_rm'] = data['s'].rolling(window=window, center=True).mean()
+    data.plot(x='f', y='s_rm', ax=ax)
+    lo = data['s_rm'][(data['f'] > lo_win[0]) & (data['f'] < lo_win[1])].mean()
+    hi = data['s_rm'][(data['f'] > hi_win[0]) & (data['f'] < hi_win[1])].mean()
+    ax.axhline(lo, c='k')
+    ax.axhline(hi, c='k')
+    ax.axhline((lo + hi)/2, c='k')
+    ax.legend().remove()
+    return
+
+
+def mw_res(fname, marker, label, mwf, ax):
+    import numpy as np
+    import pandas as pd
+    # fname = "7_mwres.txt"
+    data = pd.read_csv(fname, sep="\t", comment="#", index_col=False)
+    data.sort_values(by='f', inplace=True)
+    data['s_rm'] = data['s'].rolling(window=9, center=True).mean()
+    data.plot(x='f', y='s_rm', ax=ax, label=label)
+    for freq in (np.array([-2, -1, 0, 1, 2])*mwf + marker):
+        ax.axvline(freq, c='grey', ls='dashed')
+    ax.set_ylabel("Signal")
+    ax.set_xlabel("Frequency (GHz)")
+    return
 
 
 def dye_scan(fname):
@@ -255,28 +287,52 @@ def delay_plot(fname, xkey, ykey, ykey2, mwf, nave, ax, label, fold=1,
     return data, popt, pcov
 
 
+def delay_short(fname, mwf, ax, window=4):
+    xkey = 'wlen_fold'
+    ykey = 'nsig_fold'
+    ykey2 = 'nsig'
+    nave = window
+    fold = 1
+    blink = False
+    data, popt, pcov = delay_plot(fname, xkey, ykey, ykey2, mwf, nave, ax,
+                                  label="", fold=fold, blink=blink)
+    stepmin = wlen_to_step(popt[2]+6, mwf)
+    stepmax = wlen_to_step(popt[2]+6.5, mwf)
+    # ax.axvline(step_to_wlen(stepmin, mwf)%1, c='grey', ls='dashed')
+    # ax.axvline(step_to_wlen(stepmax, mwf)%1, c='grey', ls='dashed')
+    print("step_min = ", stepmin)
+    print("step_max = ", stepmax)
+    return data, stepmin, stepmax
+
+
+
 # ==========
 # Phase Modulation Tool
 # ==========
 
 
-def gba_target(x, value):
+def gba_target(x, value, order):
     import scipy.special as sp
-    return (sp.jv(0, x)**2 - value)**2
+    return (sp.jv(order, x)**2 - value)**2
 
 
-def get_bessel_arg(amp_off, amp_on, amp_0, guess=1.0, quiet=False):
+def get_bessel_arg(amp_off, amp_on, amp_0, guess=1.0, quiet=False, order=0):
     import scipy.optimize as opt
     import scipy.special as sp
     value = (amp_on - amp_0)/(amp_off - amp_0)
-    args = (value,)
+    args = (value, order)
     fit = opt.minimize(gba_target, guess, args=args, bounds=[(0, 100)])
     if quiet is False:
         print(fit)
     fit = fit['x'][0]
     if quiet is False:
         print("fit = ", fit)
-        print("result = ", gba_target(fit, value))
+        print("result = ", gba_target(fit, value, order))
         print("value = ", value)
-        print("jv(0, fit) = ", sp.jv(0, fit)**2)
+        print("jv({0}, fit) = ".format(order), sp.jv(order, fit)**2)
     return fit
+
+def gba_01(aoff, a0, a1, zero, quiet=False):
+    fit0 = get_bessel_arg(aoff, a0, zero, order=0, quiet=quiet)
+    fit1 = get_bessel_arg(aoff, a1, zero, order=1, quiet=quiet)
+    return fit0, fit1

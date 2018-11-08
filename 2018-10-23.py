@@ -118,8 +118,8 @@ def turning(date):
     fig, ax = plt.subplots()
     data.plot.scatter(x='mwa', y='pm', ax=ax)
     ax.set_xlim(-35, 0)
-    ax.set_xlabel("MW Attenuation (dB)")
-    ax.set_ylabel("PM Attenuation (dB)")
+    ax.set_xlabel(r"MW Power ($P_{0,MW}$ - x dB)")
+    ax.set_ylabel("PM Power ($P_{0,PM}$ - y dB)")
     ax.set_title("PM Turning Point")
     fig.tight_layout()
     fig.savefig("2018-10-23-Turning.pdf")
@@ -132,9 +132,9 @@ def dbs_min(date):
     import pandas as pd
     import toolkit as tk
     instrs = [
-              ["14_phase_min.txt", "MW = -9 dB", "C0", "o"],
-              ["15_phase_min.txt", "MW = -15 dB", "C1", "X"],
-              ["16_phase_min.txt", "MW = -21 dB", "C2", "^"]
+              ["14_phase_min.txt", "MW = $P_{0,MW}$ - 9 dB", "C0", "o"],
+              ["15_phase_min.txt", "MW = $P_{0,MW}$ - 15 dB", "C1", "X"],
+              ["16_phase_min.txt", "MW = $P_{0,MW}$ - 21 dB", "C2", "^"]
              ]
     # fname = "14_phase_min.txt"
     fig, ax = plt.subplots()
@@ -147,7 +147,7 @@ def dbs_min(date):
         data.plot(x='pm', y='nsig', marker=marker, label=label, c=color, ax=ax)
     ax.legend()
     ax.set_xlim(-51, -28)
-    ax.set_xlabel("PM Attenuation (dB)")
+    ax.set_xlabel(r"PM Power ($P_{0,PM}$ - x dB)")
     ax.set_ylabel("Normalized Signal")
     ax.set_title("Minimum vs. PM")
     fig.tight_layout()
