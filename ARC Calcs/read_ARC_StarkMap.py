@@ -210,13 +210,13 @@ def spect_cal_fig():
 
 
 def test_spectroscopy():
-    e = 9e2  # 15 V/cm, 1500 V/m
+    e = 6.6e2  # V/cm
     fmin = -4511 - 18.5*6
     fmax = -4511 + 18.5*6
     fig, ax = plt.subplots()
-    lw = 9  # 50 MHz
+    lw = 0.05  # 50 MHz
     spectrum = build_spectroscopy(e, fmin, fmax, ax, label="", lw=lw,
-                                  sbds=True, fstruct=True)
+                                  sbds=False, fstruct=True)
     return spectrum
 
 
@@ -226,8 +226,8 @@ if __name__ == "__main__":
     # efld = read_efield()
     # ax = spectrum.plot(x='freq', y='signal')
     # ax.set_xlim(-4535, -4505)
-    build_SM(color=False)
+    # build_SM(color=False)
     # scratch()
     # colortest()
     # spect_cal_fig()
-    # spectrum = test_spectroscopy()
+    spectrum = test_spectroscopy()
